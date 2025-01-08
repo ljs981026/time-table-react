@@ -1,9 +1,11 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Button } from '@mui/material';
 import {withStyles} from '@mui/styles';
-import React from 'react';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import React, { useCallback, useState } from 'react';
 import TimetableRow from './TimeTableRow';
 import { useRecoilValue } from 'recoil';
 import { timeTableState } from '../store/store';
+import InputModal from '../InputModal/InputModal';
 
 const hourData = Array.from({length: 11}, (i, j) => j + 9);
 const styles = () => ({
@@ -16,12 +18,19 @@ const styles = () => ({
 
 const TimeTable = ({classes}) => {
   // const timeTableData = useRecoilValue(timeTableState)
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = useCallback(() => {
+    setShowModal(false);
+  }, [showModal])
   return (
     <>
       <TableContainer sx={{width: "80%", minWidth: "650px", marginLeft: "auto", marginRight: "auto", marginTop: "200px"}}>
         <Typography variant='h2' fontWeight={10} component="div" align='center'>
           강의시간표
         </Typography>
+        <Button variant="contain" sx={{float: "right"}} endIcon={<AddBoxIcon/>} onClick={() => setShowModal(true)}>
+          강의 입력
+        </Button>
         <Table className={classes.Table}> 
           <TableHead>
             <TableRow>              
@@ -43,6 +52,7 @@ const TimeTable = ({classes}) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <InputModal showModal={showModal} handleClose={handleClose} />
     </>    
   )
 }
