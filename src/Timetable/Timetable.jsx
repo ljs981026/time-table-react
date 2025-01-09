@@ -17,11 +17,29 @@ const styles = () => ({
 })
 
 const TimeTable = ({classes}) => {
-  // const timeTableData = useRecoilValue(timeTableState)
+  const timeTableData = useRecoilValue(timeTableState)
   const [showModal, setShowModal] = useState(false);
+  const [editInfo, setEditInfo] = useState({});
   const handleClose = useCallback(() => {
     setShowModal(false);
-  }, [showModal])
+    setEditInfo({})
+  }, [])
+
+  const Edit = useCallback((day, id) => {   
+    console.log(day,id) 
+    console.log(timeTableData)
+    const {start, end, name, color} = timeTableData[day].find(lectureInfo => lectureInfo.id === id);
+    
+    setEditInfo({
+      dayData: day,
+      startTimeData: start,
+      endTimeData: end,
+      lectureNameData: name,
+      lectureColorData: color,
+      idNum: id
+    })
+    setShowModal(true);
+  }, [timeTableData])
   return (
     <>
       <TableContainer sx={{width: "80%", minWidth: "650px", marginLeft: "auto", marginRight: "auto", marginTop: "200px"}}>
@@ -36,23 +54,23 @@ const TimeTable = ({classes}) => {
             <TableRow>              
               <TableCell align='center' width={100}>시간</TableCell>
               <TableCell align='center' width={200}>월</TableCell>
-              <TableCell align='center' width={300}>화</TableCell>
-              <TableCell align='center' width={400}>수</TableCell>
-              <TableCell align='center' width={500}>목</TableCell>
-              <TableCell align='center' width={600}>금</TableCell>               
+              <TableCell align='center' width={200}>화</TableCell>
+              <TableCell align='center' width={200}>수</TableCell>
+              <TableCell align='center' width={200}>목</TableCell>
+              <TableCell align='center' width={200}>금</TableCell>               
             </TableRow>
           </TableHead>
           <TableBody>
             {hourData.map((time, index) => (
               <TableRow key={index}>
                 <TableCell align='center'>{`${time}:00 - ${time+1}: 00`}</TableCell>
-                <TimetableRow timeNum={time} />
+                <TimetableRow timeNum={time} Edit={Edit}/>
               </TableRow>
             ))}                        
           </TableBody>
         </Table>
       </TableContainer>
-      <InputModal showModal={showModal} handleClose={handleClose} />
+      <InputModal showModal={showModal} handleClose={handleClose} {...editInfo} />
     </>    
   )
 }
