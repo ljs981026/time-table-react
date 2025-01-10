@@ -25,9 +25,7 @@ const TimeTable = ({classes}) => {
     setEditInfo({})
   }, [])
 
-  const Edit = useCallback((day, id) => {   
-    console.log(day,id) 
-    console.log(timeTableData)
+  const Edit = useCallback((day, id) => {       
     const {start, end, name, color} = timeTableData[day].find(lectureInfo => lectureInfo.id === id);
     
     setEditInfo({

@@ -47,14 +47,12 @@ const InputModal = ({showModal, handleClose, dayData = 'mon', startTimeData = 9,
     setTimeTableData((oldTimeData) => ({
       ...oldTimeData,
       [day]: [...oldTimeData[day],data]
-    }));      
-    console.log("??",timeTableData)
+    }));          
     handleClose();
   }, [timeTableData, setTimeTableData, handleClose])
 
   const Edit = useCallback(({lectureName, day, startTime, endTime, lectureColor}) => {
-    let valid = true;
-    console.log(day,timeTableData[day])
+    let valid = true;    
     for(let index = 0; index < timeTableData[day].length; index++) {
       if(checkOverLap(timeTableData[day][index], {start: startTime, end: endTime}) && timeTableData[day][index]["id"] !== idNum) {
         valid = false;
@@ -66,8 +64,7 @@ const InputModal = ({showModal, handleClose, dayData = 'mon', startTimeData = 9,
       return;
     }
     const filteredDayData = [...timeTableData[dayData].filter(data => data.id !== idNum)];
-
-    console.log(filteredDayData, "수정한날:",day, "기존날:",dayData)
+    
     const newTimeTableData = {
       ...timeTableData,
       [dayData]: filteredDayData
