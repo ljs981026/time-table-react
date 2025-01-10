@@ -1,5 +1,5 @@
 import { TableCell } from '@mui/material';
-import React from 'react'
+import React, { memo } from 'react'
 import TimeTableCell from './TimeTableCell';
 
 const TiemTableRow = ({...props}) => {
@@ -14,4 +14,4 @@ const TiemTableRow = ({...props}) => {
   )
 }
 
-export default TiemTableRow
+export default memo(TiemTableRow)

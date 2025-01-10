@@ -1,7 +1,7 @@
 import { TableCell } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import { timeTableState } from '../store/store';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
@@ -55,4 +55,4 @@ const TimeTableCell = ({day, timeNum, Edit}) => {
   )
 }
 
-export default TimeTableCell
+export default memo(TimeTableCell);
